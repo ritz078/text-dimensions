@@ -20,7 +20,7 @@ describe('blah', () => {
       document.body.appendChild(div);
 
       const dimensions = {
-        height: div.clientHeight - 3,
+        height: div.clientHeight,
         width: div.clientWidth
       }
 
@@ -34,6 +34,11 @@ describe('blah', () => {
       return dimensions.measureText('grodd is back.')
     })
 
-    expect(heightByCanvas).toEqual(heightByDiv)
+    expect(heightByCanvas.width).toEqual(heightByDiv.width)
+
+    // heightByDiv.height will always be greater than heightByCanvas.height since the former is the
+    // height of the whole bounding box that can have any font character whereas the latter gives the
+    // exact height being used by the font characters present.
+    expect(heightByDiv.height - heightByCanvas.height).toBeLessThan(5)
   }, 200000);
 });
