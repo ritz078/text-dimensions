@@ -1,0 +1,46 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "tsdx watch --name TextDimensions --format cjs,esm,umd",
+    "build": "tsdx build --name TextDimensions --format cjs,esm,umd",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {},
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "text-dimensions",
+  "author": "Ritesh Kumar",
+  "module": "dist/dimensions.esm.js",
+  "devDependencies": {
+    "@types/jest": "^25.1.3",
+    "@types/puppeteer": "^2.0.1",
+    "husky": "^4.2.3",
+    "jest-puppeteer": "^4.4.0",
+    "prettier": "^1.19.1",
+    "puppeteer": "^2.1.1",
+    "serve": "^11.3.0",
+    "tsdx": "^0.12.3",
+    "tslib": "^1.11.0",
+    "typescript": "^3.8.2"
+  },
+  "jest": {
+    "preset": "jest-puppeteer"
+  }
+}
