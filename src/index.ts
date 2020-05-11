@@ -33,12 +33,12 @@ export default class TextDimensions {
   font: string;
 
   constructor(font = '') {
-    if (OffscreenCanvas) {
+    if ('OffscreenCanvas' in window && typeof OffscreenCanvas === 'function') {
       const canvas = new OffscreenCanvas(1000, 100);
       this.ctx = canvas.getContext('2d');
     } else {
       this.canvasElem = document.createElement('canvas');
-      document.appendChild(this.canvasElem);
+      document.body.appendChild(this.canvasElem);
       this.ctx = this.canvasElem.getContext('2d');
 
       assert(this.ctx);
@@ -82,7 +82,7 @@ export default class TextDimensions {
 
   public clean = () => {
     if (this.canvasElem) {
-      document.removeChild(this.canvasElem);
+      document.body.removeChild(this.canvasElem);
     }
   };
 }
