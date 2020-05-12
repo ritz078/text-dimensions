@@ -2,7 +2,7 @@ function assert(value: unknown, message = ''): asserts value {
   if (!value) {
     throw Error(message);
   }
-};
+}
 
 interface ITextDimensions {
   width: number;
@@ -11,7 +11,9 @@ interface ITextDimensions {
 
 const textMetrics = Object.keys(TextMetrics.prototype);
 
-const isMetricsSupported = textMetrics.includes('actualBoundingBoxAscent') && textMetrics.includes('actualBoundingBoxDescent');
+const isMetricsSupported =
+  textMetrics.includes('actualBoundingBoxAscent') &&
+  textMetrics.includes('actualBoundingBoxDescent');
 
 function isRowBlank(imageData: ImageData, width: number, y: number) {
   for (let x = 0; x < width; ++x) {
@@ -20,7 +22,13 @@ function isRowBlank(imageData: ImageData, width: number, y: number) {
   return true;
 }
 
-function isColumnBlank(imageData: ImageData, width: number, x: number, top: number, bottom: number) {
+function isColumnBlank(
+  imageData: ImageData,
+  width: number,
+  x: number,
+  top: number,
+  bottom: number
+) {
   for (let y = top; y < bottom; ++y) {
     if (imageData.data[y * width * 4 + x * 4 + 3] !== 0) return false;
   }
@@ -57,12 +65,21 @@ export default class TextDimensions {
     this.ctx.fillText(text, 0, 0);
     const { width, height } = this.ctx.canvas;
     const imageData = this.ctx.getImageData(0, 0, width, height);
-    let top = 0, bottom = imageData.height, left = 0, right = imageData.width;
+    let top = 0,
+      bottom = imageData.height,
+      left = 0,
+      right = imageData.width;
 
     while (top < bottom && isRowBlank(imageData, width, top)) ++top;
-    while (bottom - 1 > top && isRowBlank(imageData, width, bottom - 1)) --bottom;
-    while (left < right && isColumnBlank(imageData, width, left, top, bottom)) ++left;
-    while (right - 1 > left && isColumnBlank(imageData, width, right - 1, top, bottom)) --right;
+    while (bottom - 1 > top && isRowBlank(imageData, width, bottom - 1))
+      --bottom;
+    while (left < right && isColumnBlank(imageData, width, left, top, bottom))
+      ++left;
+    while (
+      right - 1 > left &&
+      isColumnBlank(imageData, width, right - 1, top, bottom)
+    )
+      --right;
 
     return bottom - top;
   };
@@ -70,9 +87,15 @@ export default class TextDimensions {
   public measureText = (text: string, font = this.font): ITextDimensions => {
     assert(this.ctx);
     this.ctx.font = font;
-    const { width, actualBoundingBoxAscent, actualBoundingBoxDescent } = this.ctx.measureText(text);
+    const {
+      width,
+      actualBoundingBoxAscent,
+      actualBoundingBoxDescent,
+    } = this.ctx.measureText(text);
 
-    const height = isMetricsSupported ? actualBoundingBoxAscent + actualBoundingBoxDescent : this.calculateBoundingBox(text);
+    const height = isMetricsSupported
+      ? actualBoundingBoxAscent + actualBoundingBoxDescent
+      : this.calculateBoundingBox(text);
 
     return {
       width: Math.round(width),
