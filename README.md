@@ -32,7 +32,7 @@ dimensions.clean();
 ## Methods
 
 - `.measureText(text: string, font?: string)`: return an object having the height and width of the text string.
-- `.cleanup()`:  removes the canvas from the DOM if it was added.
+- `.clean()`:  removes the canvas from the DOM if it was added.
 
 ## License 
 
