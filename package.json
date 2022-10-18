@@ -27,7 +27,7 @@
   },
   "name": "text-dimensions",
   "author": "Ritesh Kumar",
-  "module": "dist/dimensions.esm.js",
+  "module": "dist/textdimensions.esm.js",
   "devDependencies": {
     "@types/jest": "^25.1.3",
     "@types/puppeteer": "^2.0.1",
